@@ -27,13 +27,14 @@ fn main() {
                 let p = path.unwrap().path();
                 let s = p.to_str().unwrap();
                 let article_path = s.to_string() + "/index.md";
-                println!("> {:?}", article_path);
                 let a_p = Path::new(&article_path);
                 let mut f = File::open(a_p).unwrap();
-                println!("> {:?}", f);
                 let mut s = String::new();
                 f.read_to_string(&mut s);
-                println!("> {:?}", s);
+                let parser = Parser::new(&s);
+                let mut html_buf = String::new();
+                html::push_html(&mut html_buf, parser);
+                println!("{}", html_buf);
             }
         }
     }
