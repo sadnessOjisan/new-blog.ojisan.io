@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 pulldown-cmark = "0.8.0"
+tera = "1.7.1"
