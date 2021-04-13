@@ -8,7 +8,10 @@ use tera::{Context, Tera};
 
 fn main() {
     let tera = match Tera::new("src/templates/*.html") {
-        Ok(t) => t,
+        Ok(mut t) => {
+            t.autoescape_on(vec![]);
+            t
+        },
         Err(e) => {
             println!("Parsing error(s): {}", e);
             ::std::process::exit(1);
