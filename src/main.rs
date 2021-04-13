@@ -4,8 +4,21 @@ use std::{
     fs::{File, OpenOptions},
     path::Path,
 };
+use tera::{Context, Tera};
 
 fn main() {
+    let tera = match Tera::new("src/templates/*.html") {
+        Ok(mut t) => {
+            t.autoescape_on(vec![]); // html そのものを埋め込みたいから escape しない。
+            t
+        },
+        Err(e) => {
+            println!("Parsing error(s): {}", e);
+            ::std::process::exit(1);
+        }
+    };
+    let mut context = Context::new();
+
     let markdown_str = r#"# Hello
 人間は愚かな生物。
 
@@ -34,10 +47,17 @@ fn main() {
                 let parser = Parser::new(&s);
                 let mut html_buf = String::new();
                 html::push_html(&mut html_buf, parser);
-                println!("{}", html_buf);
+                context.insert("content", &html_buf);
+                let rendered = tera.render("post.html", &context);
+                match rendered {
+                    Ok(render) => {
+                        println!("{:?}", render)
+                    },
+                    Err(why) => {
+                        println!("{:?}", why)
+                    }
+                }
             }
         }
     }
-
-    // format!("{:?}", &dir);
 }
