@@ -9,7 +9,7 @@ use tera::{Context, Tera};
 fn main() {
     let tera = match Tera::new("src/templates/*.html") {
         Ok(mut t) => {
-            t.autoescape_on(vec![]);
+            t.autoescape_on(vec![]); // html そのものを埋め込みたいから escape しない。
             t
         },
         Err(e) => {
@@ -49,12 +49,15 @@ fn main() {
                 html::push_html(&mut html_buf, parser);
                 context.insert("content", &html_buf);
                 let rendered = tera.render("post.html", &context);
-                println!("{:?}", rendered);
+                match rendered {
+                    Ok(render) => {
+                        println!("{:?}", render)
+                    },
+                    Err(why) => {
+                        println!("{:?}", why)
+                    }
+                }
             }
         }
     }
-
-    // format!("{:?}", &dir);
-
-    
 }
