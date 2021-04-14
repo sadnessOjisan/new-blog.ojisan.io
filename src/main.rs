@@ -1,5 +1,5 @@
 use pulldown_cmark::{html, Parser};
-use std::{fs, io::Read};
+use std::{fs, io::Read, io::Write};
 use std::{
     fs::{File, OpenOptions},
     path::Path,
@@ -51,7 +51,9 @@ fn main() {
                 let rendered = tera.render("post.html", &context);
                 match rendered {
                     Ok(render) => {
-                        println!("{:?}", render)
+                        let mut file = fs::File::create("public/foo.html").unwrap();
+                        file.write_all(render.as_bytes()).unwrap();
+                        println!("{:?}", render);
                     },
                     Err(why) => {
                         println!("{:?}", why)
