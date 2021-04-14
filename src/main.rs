@@ -19,16 +19,6 @@ fn main() {
     };
     let mut context = Context::new();
 
-    let markdown_str = r#"# Hello
-人間は愚かな生物。
-
-[俺のブログ](https://blog.himanoa.net)
-"#;
-    let parser = Parser::new(markdown_str);
-    let mut html_buf = String::new();
-    html::push_html(&mut html_buf, parser);
-    println!("{}", html_buf);
-
     // 実行位置からの相対パス
     let dir = fs::read_dir("./src/contents");
 
