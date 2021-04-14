@@ -51,7 +51,7 @@ fn main() {
                 let rendered = tera.render("post.html", &context);
                 match rendered {
                     Ok(render) => {
-                        let mut file = fs::File::create("foo.html").unwrap();
+                        let mut file = fs::File::create("public/foo.html").unwrap();
                         file.write_all(render.as_bytes()).unwrap();
                         println!("{:?}", render);
                     },
