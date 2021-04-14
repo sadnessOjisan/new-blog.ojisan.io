@@ -5,6 +5,7 @@ use std::{
     path::Path,
 };
 use tera::{Context, Tera};
+use frontmatter::{parse};
 
 fn main() {
     let tera = match Tera::new("src/templates/*.html") {
@@ -18,16 +19,6 @@ fn main() {
         }
     };
     let mut context = Context::new();
-
-    let markdown_str = r#"# Hello
-人間は愚かな生物。
-
-[俺のブログ](https://blog.himanoa.net)
-"#;
-    let parser = Parser::new(markdown_str);
-    let mut html_buf = String::new();
-    html::push_html(&mut html_buf, parser);
-    println!("{}", html_buf);
 
     // 実行位置からの相対パス
     let dir = fs::read_dir("./src/contents");
@@ -44,16 +35,19 @@ fn main() {
                 let mut f = File::open(a_p).unwrap();
                 let mut s = String::new();
                 f.read_to_string(&mut s);
+                 let front = parse(&s);
+                println!("{:?}", front);
+
                 let parser = Parser::new(&s);
                 let mut html_buf = String::new();
                 html::push_html(&mut html_buf, parser);
                 context.insert("content", &html_buf);
+               
                 let rendered = tera.render("post.html", &context);
                 match rendered {
                     Ok(render) => {
                         let mut file = fs::File::create("public/foo.html").unwrap();
                         file.write_all(render.as_bytes()).unwrap();
-                        println!("{:?}", render);
                     },
                     Err(why) => {
                         println!("{:?}", why)
