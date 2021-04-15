@@ -5,7 +5,33 @@ use std::{
     path::Path,
 };
 use tera::{Context, Tera};
-use frontmatter::{parse};
+use frontmatter::{parse, Yaml};
+
+#[derive(Debug)]
+struct PostMeta {
+    path: String
+}
+
+fn parse_frontmatter(s: &str) -> PostMeta{
+    let front = parse(&s);
+    match front {
+        Ok(s) => {
+            match s {
+                Some(json) => {
+                    let path = &json["path"];
+                    match path {
+                        Yaml::String(a) => PostMeta { path: a.to_string()},
+                        _ => PostMeta { path: "".to_string()}
+                    }
+                }
+                // TODO: should raise exception
+                None => PostMeta { path: "".to_string()}
+            }
+        }
+        // TODO: should raise exception
+        Err(_) => PostMeta { path: "".to_string()}
+    }
+}
 
 fn main() {
     let tera = match Tera::new("src/templates/*.html") {
@@ -35,18 +61,19 @@ fn main() {
                 let mut f = File::open(a_p).unwrap();
                 let mut s = String::new();
                 f.read_to_string(&mut s);
-                 let front = parse(&s);
+                let front = parse_frontmatter(&s);
                 println!("{:?}", front);
-
+                // TODO: frontmatter 部分の削除
                 let parser = Parser::new(&s);
                 let mut html_buf = String::new();
                 html::push_html(&mut html_buf, parser);
                 context.insert("content", &html_buf);
-               
+                
                 let rendered = tera.render("post.html", &context);
                 match rendered {
                     Ok(render) => {
-                        let mut file = fs::File::create("public/foo.html").unwrap();
+                        let filename = format!("public/{}.html", front.path.as_str());
+                        let mut file = fs::File::create(filename).unwrap();
                         file.write_all(render.as_bytes()).unwrap();
                     },
                     Err(why) => {
