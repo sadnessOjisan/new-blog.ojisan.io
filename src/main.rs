@@ -11,6 +11,8 @@ use tera::{Context, Tera};
 #[derive(Debug)]
 struct PostMeta {
     path: String,
+    title: String,
+    tags: Vec<String>
 }
 
 fn parse_frontmatter(s: &str) -> PostMeta {
@@ -20,24 +22,27 @@ fn parse_frontmatter(s: &str) -> PostMeta {
             match s {
                 Some(json) => {
                     let path = &json["path"];
-                    match path {
-                        Yaml::String(a) => PostMeta {
-                            path: a.to_string(),
-                        },
-                        _ => PostMeta {
-                            path: "".to_string(),
-                        },
-                    }
+                    let title = &json["title"];
+                    let tags = &json["tags"];
+                    PostMeta {
+                            path: path.as_str().unwrap().to_string(),
+                            title: title.as_str().unwrap().to_string(),
+                            tags: tags.as_vec().unwrap().into_iter().map(|x| x.as_str().unwrap().to_string()).collect()
+                        }
                 }
                 // TODO: should raise exception
                 None => PostMeta {
                     path: "".to_string(),
+                    title: "".to_string(),
+                    tags: vec!()
                 },
             }
         }
         // TODO: should raise exception
         Err(_) => PostMeta {
             path: "".to_string(),
+            title: "".to_string(),
+                    tags: vec!()
         },
     }
 }
@@ -81,20 +86,19 @@ fn main() {
                 let mut f = File::open(a_p).unwrap();
                 let mut s = String::new();
                 f.read_to_string(&mut s);
-                println!("sssss: {:?}", s);
                 let front = parse_frontmatter(&s);
-                println!("{:?}", front);
 
                 // 2回 file open せなあかんのはどうにかしたい
                 f = File::open(a_p).unwrap();
                 let res = delete_frontmatter(&f);
-                println!("rrrrr: {:?}", res);
 
                 // TODO: frontmatter 部分の削除
-                let parser = Parser::new(&s);
+                let parser = Parser::new(&res);
                 let mut html_buf = String::new();
                 html::push_html(&mut html_buf, parser);
                 context.insert("content", &html_buf);
+                context.insert("title", &front.title);
+                context.insert("tags", &front.tags);
 
                 let rendered = tera.render("post.html", &context);
                 match rendered {
@@ -110,4 +114,6 @@ fn main() {
             }
         }
     }
+
+    fs::copy("src/style/post.css", "public/post.css");
 }
