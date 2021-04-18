@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="post.css" />
   </head>
   <body>
+    <ul class="tags">
+      {% for tag in tags -%}
+      <li class="tag">{{tag}}</li>
+      {%- endfor %}
+    </ul>
     <div class="post-contents">{{ content }}</div>
   </body>
 </html>

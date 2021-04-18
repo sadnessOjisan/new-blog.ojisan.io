@@ -12,6 +12,7 @@ use tera::{Context, Tera};
 struct PostMeta {
     path: String,
     title: String,
+    tags: Vec<String>
 }
 
 fn parse_frontmatter(s: &str) -> PostMeta {
@@ -22,21 +23,18 @@ fn parse_frontmatter(s: &str) -> PostMeta {
                 Some(json) => {
                     let path = &json["path"];
                     let title = &json["title"];
-                    match (path, title) {
-                        (Yaml::String(path), Yaml::String(title)) => PostMeta {
-                            path: path.to_string(),
-                            title: title.to_string(),
-                        },
-                        _ => PostMeta {
-                            path: "".to_string(),
-                            title: "".to_string(),
-                        },
-                    }
+                    let tags = &json["tags"];
+                    PostMeta {
+                            path: path.as_str().unwrap().to_string(),
+                            title: title.as_str().unwrap().to_string(),
+                            tags: tags.as_vec().unwrap().into_iter().map(|x| x.as_str().unwrap().to_string()).collect()
+                        }
                 }
                 // TODO: should raise exception
                 None => PostMeta {
                     path: "".to_string(),
                     title: "".to_string(),
+                    tags: vec!()
                 },
             }
         }
@@ -44,6 +42,7 @@ fn parse_frontmatter(s: &str) -> PostMeta {
         Err(_) => PostMeta {
             path: "".to_string(),
             title: "".to_string(),
+                    tags: vec!()
         },
     }
 }
@@ -87,7 +86,6 @@ fn main() {
                 let mut f = File::open(a_p).unwrap();
                 let mut s = String::new();
                 f.read_to_string(&mut s);
-                println!("sssss: {:?}", s);
                 let front = parse_frontmatter(&s);
 
                 // 2回 file open せなあかんのはどうにかしたい
@@ -100,6 +98,7 @@ fn main() {
                 html::push_html(&mut html_buf, parser);
                 context.insert("content", &html_buf);
                 context.insert("title", &front.title);
+                context.insert("tags", &front.tags);
 
                 let rendered = tera.render("post.html", &context);
                 match rendered {
