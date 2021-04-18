@@ -47,7 +47,7 @@ fn delete_frontmatter(f: &File) -> String {
     for (idx, line) in BufReader::new(f).lines().enumerate() {
         if (idx > 9) {
             let line = line.unwrap();
-            res = res.clone() + line.as_str();
+            res = res.clone() + line.as_str() + "\n";
         }
     }
     res
@@ -81,17 +81,17 @@ fn main() {
                 let mut f = File::open(a_p).unwrap();
                 let mut s = String::new();
                 f.read_to_string(&mut s);
+                println!("sssss: {:?}", s);
                 let front = parse_frontmatter(&s);
                 println!("{:?}", front);
 
                 // 2回 file open せなあかんのはどうにかしたい
                 f = File::open(a_p).unwrap();
                 let res = delete_frontmatter(&f);
-                let res_str = res.as_str();
-                println!("res_str{:?}", res_str);
+                println!("rrrrr: {:?}", res);
 
                 // TODO: frontmatter 部分の削除
-                let parser = Parser::new(res_str);
+                let parser = Parser::new(&s);
                 let mut html_buf = String::new();
                 html::push_html(&mut html_buf, parser);
                 context.insert("content", &html_buf);
