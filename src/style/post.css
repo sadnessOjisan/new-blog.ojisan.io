@@ -1,0 +1,9 @@
+/* 投稿ページのスタイリング */
+
+.post-contents h1 {
+  font-size: 48px;
+}
+
+.post-contents h2 {
+  font-size: 36px;
+}

@@ -11,6 +11,7 @@ use tera::{Context, Tera};
 #[derive(Debug)]
 struct PostMeta {
     path: String,
+    title: String,
 }
 
 fn parse_frontmatter(s: &str) -> PostMeta {
@@ -20,24 +21,29 @@ fn parse_frontmatter(s: &str) -> PostMeta {
             match s {
                 Some(json) => {
                     let path = &json["path"];
-                    match path {
-                        Yaml::String(a) => PostMeta {
-                            path: a.to_string(),
+                    let title = &json["title"];
+                    match (path, title) {
+                        (Yaml::String(path), Yaml::String(title)) => PostMeta {
+                            path: path.to_string(),
+                            title: title.to_string(),
                         },
                         _ => PostMeta {
                             path: "".to_string(),
+                            title: "".to_string(),
                         },
                     }
                 }
                 // TODO: should raise exception
                 None => PostMeta {
                     path: "".to_string(),
+                    title: "".to_string(),
                 },
             }
         }
         // TODO: should raise exception
         Err(_) => PostMeta {
             path: "".to_string(),
+            title: "".to_string(),
         },
     }
 }
@@ -83,18 +89,17 @@ fn main() {
                 f.read_to_string(&mut s);
                 println!("sssss: {:?}", s);
                 let front = parse_frontmatter(&s);
-                println!("{:?}", front);
 
                 // 2回 file open せなあかんのはどうにかしたい
                 f = File::open(a_p).unwrap();
                 let res = delete_frontmatter(&f);
-                println!("rrrrr: {:?}", res);
 
                 // TODO: frontmatter 部分の削除
-                let parser = Parser::new(&s);
+                let parser = Parser::new(&res);
                 let mut html_buf = String::new();
                 html::push_html(&mut html_buf, parser);
                 context.insert("content", &html_buf);
+                context.insert("title", &front.title);
 
                 let rendered = tera.render("post.html", &context);
                 match rendered {
@@ -110,4 +115,6 @@ fn main() {
             }
         }
     }
+
+    fs::copy("src/style/post.css", "public/post.css");
 }
