@@ -1,5 +1,10 @@
 /* 投稿ページのスタイリング */
 
+.tag {
+  padding: 4px;
+  border: solid 1px gray;
+}
+
 .post-contents h1 {
   font-size: 48px;
 }
