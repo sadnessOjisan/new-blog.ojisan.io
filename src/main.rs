@@ -12,38 +12,24 @@ use tera::{Context, Tera};
 struct PostMeta {
     path: String,
     title: String,
-    tags: Vec<String>
+    tags: Vec<String>,
 }
 
 fn parse_frontmatter(s: &str) -> PostMeta {
     let front = parse(&s);
-    match front {
-        Ok(s) => {
-            match s {
-                Some(json) => {
-                    let path = &json["path"];
-                    let title = &json["title"];
-                    let tags = &json["tags"];
-                    PostMeta {
-                            path: path.as_str().unwrap().to_string(),
-                            title: title.as_str().unwrap().to_string(),
-                            tags: tags.as_vec().unwrap().into_iter().map(|x| x.as_str().unwrap().to_string()).collect()
-                        }
-                }
-                // TODO: should raise exception
-                None => PostMeta {
-                    path: "".to_string(),
-                    title: "".to_string(),
-                    tags: vec!()
-                },
-            }
-        }
-        // TODO: should raise exception
-        Err(_) => PostMeta {
-            path: "".to_string(),
-            title: "".to_string(),
-                    tags: vec!()
-        },
+    let yaml = front.ok().unwrap().unwrap();
+    let path = &yaml["path"];
+    let title = &yaml["title"];
+    let tags = &yaml["tags"];
+    PostMeta {
+        path: path.as_str().unwrap().to_string(),
+        title: title.as_str().unwrap().to_string(),
+        tags: tags
+            .as_vec()
+            .unwrap()
+            .into_iter()
+            .map(|x| x.as_str().unwrap().to_string())
+            .collect(),
     }
 }
 
