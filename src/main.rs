@@ -94,7 +94,7 @@ fn main() {
                 let rendered = tera.render("post.html", &context);
                 match rendered {
                     Ok(render) => {
-                        let filename = format!("public/{}.html", front.path.as_str());
+                        let filename = format!("{}/index.html", target);
                         let mut file = fs::File::create(filename).unwrap();
                         file.write_all(render.as_bytes()).unwrap();
                     }
