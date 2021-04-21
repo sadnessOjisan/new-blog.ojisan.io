@@ -8,6 +8,8 @@ use std::{
 };
 use tera::{Context, Tera};
 
+mod file_system;
+
 #[derive(Debug)]
 struct PostMeta {
     path: String,
@@ -85,7 +87,10 @@ fn main() {
                 context.insert("content", &html_buf);
                 context.insert("title", &front.title);
                 context.insert("tags", &front.tags);
-
+                let dir = fs::read_dir("./public");
+                let target = format!("./public/{}" ,front.path.as_str());
+                let target_path = Path::new(target.as_str());
+                file_system::copy(p, target_path);
                 let rendered = tera.render("post.html", &context);
                 match rendered {
                     Ok(render) => {
