@@ -8,49 +8,38 @@ use std::{
 };
 use tera::{Context, Tera};
 
+mod file_system;
+
 #[derive(Debug)]
 struct PostMeta {
     path: String,
     title: String,
-    tags: Vec<String>
+    tags: Vec<String>,
 }
 
 fn parse_frontmatter(s: &str) -> PostMeta {
     let front = parse(&s);
-    match front {
-        Ok(s) => {
-            match s {
-                Some(json) => {
-                    let path = &json["path"];
-                    let title = &json["title"];
-                    let tags = &json["tags"];
-                    PostMeta {
-                            path: path.as_str().unwrap().to_string(),
-                            title: title.as_str().unwrap().to_string(),
-                            tags: tags.as_vec().unwrap().into_iter().map(|x| x.as_str().unwrap().to_string()).collect()
-                        }
-                }
-                // TODO: should raise exception
-                None => PostMeta {
-                    path: "".to_string(),
-                    title: "".to_string(),
-                    tags: vec!()
-                },
-            }
-        }
-        // TODO: should raise exception
-        Err(_) => PostMeta {
-            path: "".to_string(),
-            title: "".to_string(),
-                    tags: vec!()
-        },
+    let yaml = front.ok().unwrap().unwrap();
+    let path = &yaml["path"];
+    let title = &yaml["title"];
+    let tags = &yaml["tags"];
+    PostMeta {
+        path: path.as_str().unwrap().to_string(),
+        title: title.as_str().unwrap().to_string(),
+        tags: tags
+            .as_vec()
+            .unwrap()
+            .into_iter()
+            .map(|x| x.as_str().unwrap().to_string())
+            .collect(),
     }
 }
 
 fn delete_frontmatter(f: &File) -> String {
+    let FRONTMATTER_LINES = 9;
     let mut res = "".to_string();
     for (idx, line) in BufReader::new(f).lines().enumerate() {
-        if (idx > 9) {
+        if (idx > FRONTMATTER_LINES) {
             let line = line.unwrap();
             res = res.clone() + line.as_str() + "\n";
         }
@@ -99,11 +88,14 @@ fn main() {
                 context.insert("content", &html_buf);
                 context.insert("title", &front.title);
                 context.insert("tags", &front.tags);
-
+                let dir = fs::read_dir("./public");
+                let target = format!("./public/{}" ,front.path.as_str());
+                let target_path = Path::new(target.as_str());
+                file_system::copy(p, target_path);
                 let rendered = tera.render("post.html", &context);
                 match rendered {
                     Ok(render) => {
-                        let filename = format!("public/{}.html", front.path.as_str());
+                        let filename = format!("{}/index.html", target);
                         let mut file = fs::File::create(filename).unwrap();
                         file.write_all(render.as_bytes()).unwrap();
                     }
@@ -116,4 +108,5 @@ fn main() {
     }
 
     fs::copy("src/style/post.css", "public/post.css");
+    fs::copy("src/style/reset.css", "public/reset.css");
 }
