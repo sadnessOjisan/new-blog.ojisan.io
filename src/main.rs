@@ -36,9 +36,10 @@ fn parse_frontmatter(s: &str) -> PostMeta {
 }
 
 fn delete_frontmatter(f: &File) -> String {
+    let FRONTMATTER_LINES = 9;
     let mut res = "".to_string();
     for (idx, line) in BufReader::new(f).lines().enumerate() {
-        if (idx > 9) {
+        if (idx > FRONTMATTER_LINES) {
             let line = line.unwrap();
             res = res.clone() + line.as_str() + "\n";
         }
@@ -107,4 +108,5 @@ fn main() {
     }
 
     fs::copy("src/style/post.css", "public/post.css");
+    fs::copy("src/style/reset.css", "public/reset.css");
 }
