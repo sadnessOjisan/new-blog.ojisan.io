@@ -1,0 +1,57 @@
+$header_height: 100px;
+
+$text_color: #333333;
+
+header {
+  height: $header_height;
+  .title {
+    color: blueviolet;
+  }
+}
+
+body {
+  font-family: "M PLUS Rounded 1c";
+  color: $text_color;
+  padding: 8px;
+}
+
+.post-head {
+  max-width: 1080px;
+  margin: auto;
+  h1 {
+    font-size: 48px;
+    margin: 24px 0px;
+  }
+}
+
+.post-contents {
+  max-width: 1080px;
+  margin: auto;
+
+  h2 {
+    font-size: 36px;
+    margin: 24px 0px;
+    border-bottom: 1px solid #eaecef;
+  }
+
+  h3 {
+    font-size: 24px;
+    margin: 20px 0px;
+  }
+
+  p {
+    line-height: 1.5;
+  }
+
+  img {
+    width: 600px;
+    height: 360px;
+    margin: 32px 0px;
+  }
+
+  pre {
+    background-color: #eeeeee;
+    padding: 8px;
+    border-radius: 8px;
+  }
+}

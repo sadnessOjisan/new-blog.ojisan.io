@@ -1,19 +1,50 @@
-/* 投稿ページのスタイリング */
-
-.tags {
-  display: flex;
-  list-style-type: none;
+header {
+  height: 100px;
+}
+header .title {
+  color: blueviolet;
 }
 
-.tag {
-  padding: 4px;
-  border: solid 1px gray;
+body {
+  font-family: "M PLUS Rounded 1c";
+  color: #333333;
+  padding: 8px;
 }
 
-.post-contents h1 {
+.post-head {
+  max-width: 1080px;
+  margin: auto;
+}
+.post-head h1 {
   font-size: 48px;
+  margin: 24px 0px;
 }
 
+.post-contents {
+  max-width: 1080px;
+  margin: auto;
+}
 .post-contents h2 {
   font-size: 36px;
+  margin: 24px 0px;
+  border-bottom: 1px solid #eaecef;
 }
+.post-contents h3 {
+  font-size: 24px;
+  margin: 20px 0px;
+}
+.post-contents p {
+  line-height: 1.5;
+}
+.post-contents img {
+  width: 600px;
+  height: 360px;
+  margin: 32px 0px;
+}
+.post-contents pre {
+  background-color: #eeeeee;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+/*# sourceMappingURL=post.css.map */

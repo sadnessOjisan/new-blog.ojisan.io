@@ -2,11 +2,10 @@
 
 シン・blog.ojisan.io
 
-## TODO
+## dev
 
-- [ ] md から HTML へ変換する
-  - [ ] タグごとにページを作る
-  - [ ] 一覧から個別記事へ飛べる
-  - [ ] 記事詳細を作る
-- [ ] シンタックスハイライト
-- [ ] サイズの大きい画像を見つけたら変換する
+```sh
+npm install -g sass
+
+sass src/style/post.scss src/style/post.css
+```
