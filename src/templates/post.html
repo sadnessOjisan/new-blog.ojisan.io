@@ -17,11 +17,9 @@
     <header>
       <span class="title">blog.ojisan.io</span>
     </header>
-    <ul class="tags">
-      {% for tag in tags -%}
-      <li class="tag">{{tag}}</li>
-      {%- endfor %}
-    </ul>
+    <div class="post-head">
+      <h1>{{title}}</h1>
+    </div>
     <div class="post-contents">{{ content }}</div>
     <script>
       (function () {
