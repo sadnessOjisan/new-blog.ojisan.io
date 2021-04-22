@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{title}}</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c"
+      rel="stylesheet"
+      id="webfont"
+    />
     <link rel="stylesheet" href="../post.css" />
     <link rel="stylesheet" href="../reset.css" />
   </head>
@@ -18,5 +23,11 @@
       {%- endfor %}
     </ul>
     <div class="post-contents">{{ content }}</div>
+    <script>
+      (function () {
+        var webfont = document.getElementById("webfont");
+        webfont.rel = "stylesheet";
+      })();
+    </script>
   </body>
 </html>

@@ -8,15 +8,47 @@
   border: solid 1px gray;
 }
 
+header {
+  height: 100px;
+}
 header .title {
   color: blueviolet;
 }
 
+body {
+  font-family: "M PLUS Rounded 1c";
+  color: #333333;
+  padding: 8px;
+}
+
+.post-contents {
+  max-width: 1080px;
+  margin: auto;
+}
 .post-contents h1 {
   font-size: 48px;
+  margin-top: 24px;
 }
 .post-contents h2 {
   font-size: 36px;
+  margin-top: 24px;
+}
+.post-contents h3 {
+  font-size: 24px;
+  margin-top: 20px;
+}
+.post-contents p {
+  line-height: 1.5;
+}
+.post-contents img {
+  width: 600px;
+  height: 360px;
+  margin: 32px 0px;
+}
+.post-contents pre {
+  background-color: #eeeeee;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 /*# sourceMappingURL=post.css.map */
