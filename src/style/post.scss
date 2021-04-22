@@ -1,0 +1,25 @@
+.tags {
+  display: flex;
+  list-style-type: none;
+}
+
+.tag {
+  padding: 4px;
+  border: solid 1px gray;
+}
+
+header {
+  .title {
+    color: blueviolet;
+  }
+}
+
+.post-contents {
+  h1 {
+    font-size: 48px;
+  }
+
+  h2 {
+    font-size: 36px;
+  }
+}
