@@ -10,6 +10,15 @@
       rel="stylesheet"
       id="webfont"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fonts.googleapis.com/css?family=Inconsolata"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/nord.min.css"
+    />
     <link rel="stylesheet" href="../post.css" />
     <link rel="stylesheet" href="../reset.css" />
   </head>
@@ -21,6 +30,10 @@
       <h1>{{title}}</h1>
     </div>
     <div class="post-contents">{{ content }}</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
     <script>
       (function () {
         var webfont = document.getElementById("webfont");
