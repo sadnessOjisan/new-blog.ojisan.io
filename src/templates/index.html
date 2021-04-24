@@ -1,5 +1,6 @@
 {% for item in items %}
-<a href="{{item.path}}">
+<a href="./{{item.path}}">
+  <img src="./{{item.path}}/visual.png" />
   <div>{{item.title}}</div>
 </a>
 {% endfor %}
