@@ -1,3 +1,19 @@
+footer {
+  background-color: #cccccc;
+  text-align: center;
+  padding: 32px;
+}
+footer > p {
+  margin: 12px 0px;
+}
+footer a {
+  color: #0070a3;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+
 body {
   background: #f9f9f9;
   font-family: "M PLUS Rounded 1c";
@@ -14,6 +30,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   margin: auto;
+  padding-bottom: 32px;
   justify-content: center;
 }
 .items a:hover .title {

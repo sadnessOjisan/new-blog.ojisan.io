@@ -1,5 +1,7 @@
 use frontmatter::{parse, Yaml};
-use pulldown_cmark::{html, Parser};
+use pulldown_cmark::{html, Event, LinkType, Parser, Tag};
+use serde::Serialize;
+use std::borrow::Cow::Owned;
 use std::io::{BufRead, BufReader};
 use std::{fs, io::Read, io::Write};
 use std::{
@@ -7,7 +9,6 @@ use std::{
     path::Path,
 };
 use tera::{Context, Tera};
-use serde::{Serialize};
 
 mod file_system;
 
@@ -23,7 +24,7 @@ struct PostMeta {
 struct IndexItem {
     title: String,
     path: String,
-    created_at: String
+    created_at: String,
 }
 
 fn parse_frontmatter(s: &str) -> PostMeta {
@@ -43,7 +44,7 @@ fn parse_frontmatter(s: &str) -> PostMeta {
             .into_iter()
             .map(|x| x.as_str().unwrap().to_string())
             .collect(),
-        created_at: created_at.as_str().unwrap().to_string()
+        created_at: created_at.as_str().unwrap().to_string(),
     }
 }
 
@@ -76,7 +77,7 @@ fn main() {
     // 実行位置からの相対パス
     let dir = fs::read_dir("./src/contents");
 
-    let mut items: Vec<IndexItem> = vec!();
+    let mut items: Vec<IndexItem> = vec![];
 
     // https://doc.rust-jp.rs/rust-by-example-ja/std_misc/fs.html
     match dir {
@@ -97,7 +98,24 @@ fn main() {
                 let res = delete_frontmatter(&f);
 
                 // TODO: frontmatter 部分の削除
-                let parser = Parser::new(&res);
+                let parser = Parser::new(&res).map(|event| match event.clone() {
+                    Event::Text(text) => {
+                        match text.find("https") {
+                            Some(n) => {
+                                    println!("{:?}", text);
+                                    println!("{:?}", n);
+                                if (n == 0) {
+                                    Event::Start(Tag::Link(LinkType::Autolink, text.clone(), text))
+                                   
+                                } else {
+                                    event
+                                }
+                            }
+                            None => event,
+                        }
+                    }
+                    _ => event,
+                });
                 let mut html_buf = String::new();
                 html::push_html(&mut html_buf, parser);
                 context.insert("content", &html_buf);
@@ -105,7 +123,7 @@ fn main() {
                 context.insert("tags", &front.tags);
                 context.insert("created_at", &front.created_at);
                 let dir = fs::read_dir("./public");
-                let target = format!("./public/{}" ,front.path.as_str());
+                let target = format!("./public/{}", front.path.as_str());
                 let target_path = Path::new(target.as_str());
                 file_system::copy(p, target_path);
                 let rendered = tera.render("post.html", &context);
@@ -128,20 +146,20 @@ fn main() {
                 }
             }
             items.sort_by(|a, b| b.created_at.cmp(&a.created_at));
-              println!("top_rendered error -> {:?}", items);
+            println!("top_rendered error -> {:?}", items);
             topContext.insert("items", &items);
             let top_rendered = tera.render("index.html", &topContext);
             match top_rendered {
-                    Ok(render) => {
-                        let target = "./public";
-                        let filename = format!("{}/index.html", target);
-                        let mut file = fs::File::create(filename).unwrap();
-                        file.write_all(render.as_bytes()).unwrap();
-                    }
-                    Err(why) => {
-                        println!("top_rendered error -> {:?}", why)
-                    }
+                Ok(render) => {
+                    let target = "./public";
+                    let filename = format!("{}/index.html", target);
+                    let mut file = fs::File::create(filename).unwrap();
+                    file.write_all(render.as_bytes()).unwrap();
                 }
+                Err(why) => {
+                    println!("top_rendered error -> {:?}", why)
+                }
+            }
         }
     }
 
