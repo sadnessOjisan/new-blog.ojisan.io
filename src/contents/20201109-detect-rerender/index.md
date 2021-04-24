@@ -75,16 +75,16 @@ uhyo さんのコードはこんな感じで動いていた。
 preact + CSS in JS で実装し直すとこういう感じになる。
 
 ```tsx
-import { h } from "preact";
-import { styled } from "goober";
+import { h } from "preact"
+import { styled } from "goober"
 
 const Component = (props: { cnt: number; className?: string }) => {
   return (
     <div className={props.className} key={props.cnt}>
       <span>cnt: {props.cnt}</span>
     </div>
-  );
-};
+  )
+}
 
 const StyledComponent = styled(Component)`
   @keyframes rendered {
@@ -100,9 +100,9 @@ const StyledComponent = styled(Component)`
     animation: rendered 1s ease;
     animation-iteration-count: 1;
   }
-`;
+`
 
-export const Count = StyledComponent;
+export const Count = StyledComponent
 ```
 
 ## 終わりに
