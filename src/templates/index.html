@@ -29,6 +29,7 @@
       <a href="./{{item.path}}/index.html">
         <div class="item">
           <img
+            src="./{{item.path}}/visual.png"
             data-src="./{{item.path}}/visual.png"
             class="visual lazyload"
             loading="lazy"
@@ -58,10 +59,6 @@
   <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
   <script>
     if ("loading" in HTMLImageElement.prototype) {
-      const images = document.querySelectorAll('img[loading="lazy"]');
-      images.forEach(function (img) {
-        img.src = img.dataset.src;
-      });
     } else {
       const script = document.createElement("script");
       script.src =
