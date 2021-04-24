@@ -1,8 +1,13 @@
 header {
   height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 header .title {
   color: #333333;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 body {
@@ -11,13 +16,31 @@ body {
   padding: 8px;
 }
 
+header a {
+  text-decoration: none;
+}
+header a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+header a:visited {
+  color: inherit;
+}
+
 .post-head {
   max-width: 1080px;
   margin: auto;
 }
+.post-head time {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  color: #7a7a7a;
+}
 .post-head h1 {
   font-size: 48px;
-  margin: 24px 0px;
+  margin-bottom: 24px;
+  line-height: 1;
 }
 .post-head .key_visual {
   width: 100%;
@@ -40,6 +63,7 @@ body {
 }
 .post-contents p {
   line-height: 1.5;
+  margin: 8px 0px;
 }
 .post-contents p code {
   background-color: #eeeeee;
@@ -55,6 +79,9 @@ body {
   font-family: Inconsolata !important;
   padding: 8px;
   border-radius: 8px;
+}
+.post-contents blockquote {
+  margin: 12px;
 }
 
 /*# sourceMappingURL=post.css.map */

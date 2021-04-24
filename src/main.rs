@@ -33,7 +33,6 @@ fn parse_frontmatter(s: &str) -> PostMeta {
     let title = &yaml["title"];
     let tags = &yaml["tags"];
     let created_at = &yaml["created"];
-    let s = created_at.as_str().unwrap();
 
     PostMeta {
         path: path.as_str().unwrap().to_string(),
@@ -104,6 +103,7 @@ fn main() {
                 context.insert("content", &html_buf);
                 context.insert("title", &front.title);
                 context.insert("tags", &front.tags);
+                context.insert("created_at", &front.created_at);
                 let dir = fs::read_dir("./public");
                 let target = format!("./public/{}" ,front.path.as_str());
                 let target_path = Path::new(target.as_str());

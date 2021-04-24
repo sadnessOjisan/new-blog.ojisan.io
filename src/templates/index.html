@@ -20,7 +20,10 @@
       <a href="./{{item.path}}/index.html">
         <div class="item">
           <img src="./{{item.path}}/visual.png" class="visual" />
-          <div class="title">{{item.title}}</div>
+          <div class="title">
+            <time>{{item.created_at}}</time>
+            <p>{{item.title}}</p>
+          </div>
         </div>
       </a>
       {% endfor %}
