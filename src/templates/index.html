@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>blog.ojisan.io</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c"
+      rel="stylesheet"
+      id="webfont"
+    />
+    <link rel="stylesheet" href="./reset.css" />
+    <link rel="stylesheet" href="./top.css" />
+  </head>
+  <body>
+    <div class="blog_title">blog.ojisan.io</div>
+    <div class="items">
+      {% for item in items %}
+      <a href="./{{item.path}}/index.html">
+        <div class="item">
+          <img src="./{{item.path}}/visual.png" class="visual" />
+          <div class="title">{{item.title}}</div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </body>
+</html>

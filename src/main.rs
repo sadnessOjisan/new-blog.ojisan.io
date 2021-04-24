@@ -7,6 +7,7 @@ use std::{
     path::Path,
 };
 use tera::{Context, Tera};
+use serde::{Serialize};
 
 mod file_system;
 
@@ -15,6 +16,12 @@ struct PostMeta {
     path: String,
     title: String,
     tags: Vec<String>,
+}
+
+#[derive(Serialize, Debug)]
+struct IndexItem {
+    title: String,
+    path: String
 }
 
 fn parse_frontmatter(s: &str) -> PostMeta {
@@ -59,9 +66,12 @@ fn main() {
         }
     };
     let mut context = Context::new();
+    let mut topContext = Context::new();
 
     // 実行位置からの相対パス
     let dir = fs::read_dir("./src/contents");
+
+    let mut items: Vec<IndexItem> = vec!();
 
     // https://doc.rust-jp.rs/rust-by-example-ja/std_misc/fs.html
     match dir {
@@ -93,6 +103,12 @@ fn main() {
                 let target_path = Path::new(target.as_str());
                 file_system::copy(p, target_path);
                 let rendered = tera.render("post.html", &context);
+
+                let item = IndexItem {
+                    title: front.title,
+                    path: front.path
+                };
+                items.push(item);
                 match rendered {
                     Ok(render) => {
                         let filename = format!("{}/index.html", target);
@@ -104,9 +120,23 @@ fn main() {
                     }
                 }
             }
+            topContext.insert("items", &items);
+            let top_rendered = tera.render("index.html", &topContext);
+            match top_rendered {
+                    Ok(render) => {
+                        let target = "./public";
+                        let filename = format!("{}/index.html", target);
+                        let mut file = fs::File::create(filename).unwrap();
+                        file.write_all(render.as_bytes()).unwrap();
+                    }
+                    Err(why) => {
+                        println!("top_rendered error -> {:?}", why)
+                    }
+                }
         }
     }
 
     fs::copy("src/style/post.css", "public/post.css");
+    fs::copy("src/style/top.css", "public/top.css");
     fs::copy("src/style/reset.css", "public/reset.css");
 }
