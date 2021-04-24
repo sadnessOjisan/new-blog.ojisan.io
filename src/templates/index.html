@@ -19,7 +19,11 @@
       {% for item in items %}
       <a href="./{{item.path}}/index.html">
         <div class="item">
-          <img src="./{{item.path}}/visual.png" class="visual" />
+          <img
+            data-src="./{{item.path}}/visual.png"
+            class="visual lazyload"
+            loading="lazy"
+          />
           <div class="title">
             <time>{{item.created_at}}</time>
             <p>{{item.title}}</p>
@@ -28,5 +32,38 @@
       </a>
       {% endfor %}
     </div>
+    <footer>
+      <p>
+        このサイトでは Google
+        Analyticsでの計測のため、クッキーを利用しています。
+      </p>
+      <p>
+        このサイトのソースコードは<a
+          href="https://github.com/sadnessOjisan/new-blog.ojisan.io"
+          >こちら</a
+        >。
+      </p>
+      <p>©︎ <a href="https://twitter.com/sadnessOjisan">sadnessOjisan</a></p>
+    </footer>
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+  <script>
+    if ("loading" in HTMLImageElement.prototype) {
+      const images = document.querySelectorAll('img[loading="lazy"]');
+      images.forEach(function (img) {
+        img.src = img.dataset.src;
+      });
+    } else {
+      const script = document.createElement("script");
+      script.src =
+        "https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js";
+      document.body.appendChild(script);
+    }
+  </script>
+  <script>
+    if ("loading" in HTMLImageElement.prototype) {
+    } else {
+      lazyload();
+    }
+  </script>
 </html>

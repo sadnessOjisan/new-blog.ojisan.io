@@ -1,0 +1,15 @@
+footer {
+  background-color: #cccccc;
+  text-align: center;
+  padding: 32px;
+  > p {
+    margin: 12px 0px;
+  }
+  a {
+    color: rgb(0, 112, 163);
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
