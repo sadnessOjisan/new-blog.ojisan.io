@@ -98,24 +98,7 @@ fn main() {
                 let res = delete_frontmatter(&f);
 
                 // TODO: frontmatter 部分の削除
-                let parser = Parser::new(&res).map(|event| match event.clone() {
-                    Event::Text(text) => {
-                        match text.find("https") {
-                            Some(n) => {
-                                    println!("{:?}", text);
-                                    println!("{:?}", n);
-                                if (n == 0) {
-                                    Event::Start(Tag::Link(LinkType::Autolink, text.clone(), text))
-                                   
-                                } else {
-                                    event
-                                }
-                            }
-                            None => event,
-                        }
-                    }
-                    _ => event,
-                });
+                let parser = Parser::new(&res);
                 let mut html_buf = String::new();
                 html::push_html(&mut html_buf, parser);
                 context.insert("content", &html_buf);
@@ -146,7 +129,6 @@ fn main() {
                 }
             }
             items.sort_by(|a, b| b.created_at.cmp(&a.created_at));
-            println!("top_rendered error -> {:?}", items);
             topContext.insert("items", &items);
             let top_rendered = tera.render("index.html", &topContext);
             match top_rendered {
