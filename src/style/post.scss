@@ -1,33 +1,37 @@
+@import "./footer.scss";
+
 $header_height: 60px;
 
 $text_color: #333333;
 $date_color: #7a7a7a;
+
+body {
+  background: #f9f9f9;
+  font-family: "M PLUS Rounded 1c";
+  color: $text_color;
+}
 
 header {
   height: $header_height;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 68px;
+  background-color: rgba(255, 255, 255, 0.8);
   .title {
-    color: $text_color;
+    color: rgb(0, 112, 163);
     font-weight: bold;
     font-size: 20px;
   }
-}
-
-body {
-  font-family: "M PLUS Rounded 1c";
-  color: $text_color;
-  padding: 8px;
-}
-
-header {
   a {
     text-decoration: none;
   }
   a:hover {
     cursor: pointer;
-    text-decoration: underline;
   }
   a:visited {
     color: inherit;
@@ -37,6 +41,7 @@ header {
 .post-head {
   max-width: 1080px;
   margin: auto;
+  margin-top: 68px;
   time {
     display: block;
     margin-top: 12px;
@@ -58,6 +63,10 @@ header {
 .post-contents {
   max-width: 1080px;
   margin: auto;
+  padding: 16px;
+  a {
+    color: rgb(0, 112, 163);
+  }
 
   h2 {
     font-size: 36px;
@@ -80,11 +89,16 @@ header {
     }
   }
 
+  iframe {
+    display: block;
+    margin: 32px auto;
+  }
+
   img {
     width: 600px;
     height: 360px;
-    margin: 32px 0px;
     object-fit: contain;
+    margin: 32px auto;
   }
 
   pre {
@@ -96,6 +110,13 @@ header {
   }
 
   blockquote {
-    margin: 12px;
+    background: #f9f9f9;
+    border-left: 4px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+  }
+  blockquote p {
+    display: inline;
   }
 }
