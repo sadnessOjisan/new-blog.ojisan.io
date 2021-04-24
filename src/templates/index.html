@@ -4,22 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{title}}</title>
+    <title>blog.ojisan.io</title>
     <link
       href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c"
       rel="stylesheet"
       id="webfont"
     />
     <link rel="stylesheet" href="./reset.css" />
+    <link rel="stylesheet" href="./top.css" />
   </head>
   <body>
-    {% for item in items %}
-    <a href="./{{item.path}}/index.html">
-      <div class="item">
-        <img src="./{{item.path}}/visual.png" class="visual" />
-        <div>{{item.title}}</div>
-      </div>
-    </a>
-    {% endfor %}
+    <header>
+      <span class="title">blog.ojisan.io</span>
+    </header>
+    <div class="items">
+      {% for item in items %}
+      <a href="./{{item.path}}/index.html">
+        <div class="item">
+          <img src="./{{item.path}}/visual.png" class="visual" />
+          <div class="title">{{item.title}}</div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
   </body>
 </html>

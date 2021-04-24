@@ -18,7 +18,7 @@ struct PostMeta {
     tags: Vec<String>,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Debug)]
 struct IndexItem {
     title: String,
     path: String
@@ -130,12 +130,13 @@ fn main() {
                         file.write_all(render.as_bytes()).unwrap();
                     }
                     Err(why) => {
-                        println!("{:?}", why)
+                        println!("top_rendered error -> {:?}", why)
                     }
                 }
         }
     }
 
     fs::copy("src/style/post.css", "public/post.css");
+    fs::copy("src/style/top.css", "public/top.css");
     fs::copy("src/style/reset.css", "public/reset.css");
 }
