@@ -16,12 +16,14 @@ struct PostMeta {
     path: String,
     title: String,
     tags: Vec<String>,
+    created_at: String,
 }
 
 #[derive(Serialize, Debug)]
 struct IndexItem {
     title: String,
-    path: String
+    path: String,
+    created_at: String
 }
 
 fn parse_frontmatter(s: &str) -> PostMeta {
@@ -30,6 +32,9 @@ fn parse_frontmatter(s: &str) -> PostMeta {
     let path = &yaml["path"];
     let title = &yaml["title"];
     let tags = &yaml["tags"];
+    let created_at = &yaml["created"];
+    let s = created_at.as_str().unwrap();
+
     PostMeta {
         path: path.as_str().unwrap().to_string(),
         title: title.as_str().unwrap().to_string(),
@@ -39,6 +44,7 @@ fn parse_frontmatter(s: &str) -> PostMeta {
             .into_iter()
             .map(|x| x.as_str().unwrap().to_string())
             .collect(),
+        created_at: created_at.as_str().unwrap().to_string()
     }
 }
 
@@ -106,7 +112,8 @@ fn main() {
 
                 let item = IndexItem {
                     title: front.title,
-                    path: front.path
+                    path: front.path,
+                    created_at: front.created_at,
                 };
                 items.push(item);
                 match rendered {
@@ -120,6 +127,8 @@ fn main() {
                     }
                 }
             }
+            items.sort_by(|a, b| b.created_at.cmp(&a.created_at));
+              println!("top_rendered error -> {:?}", items);
             topContext.insert("items", &items);
             let top_rendered = tera.render("index.html", &topContext);
             match top_rendered {
