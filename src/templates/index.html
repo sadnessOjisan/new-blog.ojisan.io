@@ -1,1 +1,5 @@
-{% for item in items %} {{loop.index}}. {{item.title}} {% endfor %}
+{% for item in items %}
+<a href="{{item.path}}">
+  <div>{{item.title}}</div>
+</a>
+{% endfor %}

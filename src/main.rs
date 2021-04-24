@@ -20,7 +20,8 @@ struct PostMeta {
 
 #[derive(Serialize)]
 struct IndexItem {
-    title: String
+    title: String,
+    path: String
 }
 
 fn parse_frontmatter(s: &str) -> PostMeta {
@@ -104,7 +105,8 @@ fn main() {
                 let rendered = tera.render("post.html", &context);
 
                 let item = IndexItem {
-                    title: front.title
+                    title: front.title,
+                    path: front.path
                 };
                 items.push(item);
                 match rendered {
