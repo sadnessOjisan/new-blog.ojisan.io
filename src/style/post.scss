@@ -5,7 +5,7 @@ $text_color: #333333;
 header {
   height: $header_height;
   .title {
-    color: blueviolet;
+    color: $text_color;
   }
 }
 
@@ -21,6 +21,11 @@ body {
   h1 {
     font-size: 48px;
     margin: 24px 0px;
+  }
+  .key_visual {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
   }
 }
 
