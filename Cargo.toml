@@ -9,4 +9,5 @@ edition = "2018"
 [dependencies]
 frontmatter = "0.4.0"
 pulldown-cmark = "0.8.0"
+serde = {version="1.0.125", features = ["derive"] }
 tera = "1.7.1"
