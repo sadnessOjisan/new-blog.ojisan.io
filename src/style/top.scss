@@ -5,15 +5,10 @@ body {
   color: $text_color;
 }
 
-// TODO: import で共有化
-$header_height: 60px;
-
-header {
-  height: $header_height;
-  padding: 12px;
-  .title {
-    color: blueviolet;
-  }
+.blog_title {
+  text-align: center;
+  font-size: 48px;
+  padding: 32px 0px;
 }
 
 .items {
@@ -22,8 +17,8 @@ header {
   margin: auto;
   justify-content: center;
   .item {
-    width: 300px;
-    height: 240px;
+    width: 400px;
+    height: 300px;
     position: relative;
     .visual {
       width: 100%;

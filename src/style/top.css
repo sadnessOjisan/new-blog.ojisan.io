@@ -3,12 +3,10 @@ body {
   color: #333333;
 }
 
-header {
-  height: 60px;
-  padding: 12px;
-}
-header .title {
-  color: blueviolet;
+.blog_title {
+  text-align: center;
+  font-size: 48px;
+  padding: 32px 0px;
 }
 
 .items {
@@ -18,8 +16,8 @@ header .title {
   justify-content: center;
 }
 .items .item {
-  width: 300px;
-  height: 240px;
+  width: 400px;
+  height: 300px;
   position: relative;
 }
 .items .item .visual {
