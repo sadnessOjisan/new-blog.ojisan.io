@@ -1,11 +1,17 @@
 $header_height: 60px;
 
 $text_color: #333333;
+$date_color: #7a7a7a;
 
 header {
   height: $header_height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .title {
     color: $text_color;
+    font-weight: bold;
+    font-size: 20px;
   }
 }
 
@@ -15,12 +21,32 @@ body {
   padding: 8px;
 }
 
+header {
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  a:visited {
+    color: inherit;
+  }
+}
+
 .post-head {
   max-width: 1080px;
   margin: auto;
+  time {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 8px;
+    color: $date_color;
+  }
   h1 {
     font-size: 48px;
-    margin: 24px 0px;
+    margin-bottom: 24px;
+    line-height: 1;
   }
   .key_visual {
     width: 100%;
@@ -46,6 +72,7 @@ body {
 
   p {
     line-height: 1.5;
+    margin: 8px 0px;
     code {
       background-color: #eeeeee;
       padding: 4px;
@@ -65,5 +92,9 @@ body {
       padding: 8px;
       border-radius: 8px;
     }
+  }
+
+  blockquote {
+    margin: 12px;
   }
 }
