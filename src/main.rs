@@ -97,20 +97,34 @@ fn main() {
                 f = File::open(a_p).unwrap();
                 let res = delete_frontmatter(&f);
 
-                // TODO: frontmatter 部分の削除
-                let parser = Parser::new(&res);
+                let mut description = "".to_string();
+                let mut cnt = 0;
+                let parser = Parser::new(&res).map(|event| match event.clone() {
+                    Event::Text(text) => {
+                        let description_parts = text.into_string();
+                        let description_parts_len = description_parts.len();
+                        if(cnt < 100){
+                            cnt = cnt + description_parts_len;
+                            let description_parts_str = description_parts.as_str();
+                            description = format!("{}{}",description , description_parts_str);
+                        }
+                        event
+                    },
+                    _ => event
+                });
                 let mut html_buf = String::new();
                 html::push_html(&mut html_buf, parser);
+                context.insert("description", &description);
                 context.insert("content", &html_buf);
+                context.insert("description", &description);
                 context.insert("title", &front.title);
-                context.insert("tags", &front.tags);
+                context.insert("path", &front.path);
                 context.insert("created_at", &front.created_at);
                 let dir = fs::read_dir("./public");
                 let target = format!("./public/{}", front.path.as_str());
                 let target_path = Path::new(target.as_str());
                 file_system::copy(p, target_path);
                 let rendered = tera.render("post.html", &context);
-
                 let item = IndexItem {
                     title: front.title,
                     path: front.path,
