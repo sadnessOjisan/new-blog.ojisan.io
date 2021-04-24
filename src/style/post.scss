@@ -41,6 +41,11 @@ body {
 
   p {
     line-height: 1.5;
+    code {
+      background-color: #eeeeee;
+      padding: 4px;
+      border-radius: 4px;
+    }
   }
 
   img {
@@ -50,8 +55,10 @@ body {
   }
 
   pre {
-    background-color: #eeeeee;
-    padding: 8px;
-    border-radius: 8px;
+    code {
+      font-family: Inconsolata !important;
+      padding: 8px;
+      border-radius: 8px;
+    }
   }
 }
