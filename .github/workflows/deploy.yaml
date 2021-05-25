@@ -1,0 +1,29 @@
+name: deploy to remote
+
+on:
+  push:
+    branches:
+      - "*"
+      - "**/*"
+  pull_request:
+    branches:
+      - "*"
+      - "**/*"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: actions-rs/cargo@v1
+        with:
+          command: run
+      - name: ssh key generate
+        run: echo "$SSH_PRIVATE_KEY" > key && chmod 600 key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: rsync deploy
+        run: rsync -av -e 'ssh -i key' public/ root@160.16.68.139:/var/www/html
