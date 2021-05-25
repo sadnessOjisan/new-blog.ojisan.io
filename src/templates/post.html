@@ -1,70 +1,66 @@
 <!DOCTYPE html>
 <html lang="jp">
-  <head>
-    <meta charset="UTF-8" />
-    <title>{{title}}</title>
-    <meta name="description" content="{{description}}">
-    <meta property="og:title" content="{{title}}">
-    <meta property="og:image" content="https://blog.ojisan.io/{{path}}/visual.png">
-    <meta property="og:description" content="{{description}}">
-    <meta property="og:type" content="article">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:creator" content="@sadnessOjisan">
-    <meta name="twitter:title" content="{{title}}">
-    <meta name="twitter:description" content="{{description}}">
-    <link
-      href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c"
-      rel="stylesheet"
-      id="webfont"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://fonts.googleapis.com/css?family=Inconsolata"
-    />
-    <!-- FYI: https://highlightjs.org/static/demo/ -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/nord.min.css"
-    />
-    <link rel="stylesheet" href="../post.css" />
-    <link rel="stylesheet" href="../reset.css" />
-  </head>
-  <body>
-    <header>
-      <a href="/">
-        <span class="title">blog.ojisan.io</span>
-      </a>
-    </header>
-    <div class="post-head">
-      <img src="./visual.png" class="key_visual"></img>
-      <time>{{created_at}}</time>
-      <h1>{{title}}</h1>
-    </div>
-    <div class="post-contents">{{ content }}</div>
-    <footer>
-      <p>
-        このサイトでは Google
-        Analyticsでの計測のため、クッキーを利用しています。
-      </p>
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119542494-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-119542494-2');
+  </script>
+  <meta charset="UTF-8" />
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:image" content="https://blog.ojisan.io/{{path}}/visual.png">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@sadnessOjisan">
+  <meta name="twitter:title" content="{{title}}">
+  <meta name="twitter:description" content="{{description}}">
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet" id="webfont" />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inconsolata" />
+  <!-- FYI: https://highlightjs.org/static/demo/ -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/nord.min.css" />
+  <link rel="stylesheet" href="../post.css" />
+  <link rel="stylesheet" href="../reset.css" />
+</head>
 
-      <p>
-        このサイトのソースコードは<a
-          href="https://github.com/sadnessOjisan/new-blog.ojisan.io"
-          >こちら</a
-        >。
-      </p>
-      <p>©︎ <a href="https://twitter.com/sadnessOjisan">sadnessOjisan</a></p>
-    </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
-    <script>
-      hljs.highlightAll();
-    </script>
-    <script>
-      (function () {
-        var webfont = document.getElementById("webfont");
-        webfont.rel = "stylesheet";
-      })();
-    </script>
-  </body>
+<body>
+  <header>
+    <a href="/">
+      <span class="title">blog.ojisan.io</span>
+    </a>
+  </header>
+  <div class="post-head">
+    <img src="./visual.png" class="key_visual"></img>
+    <time>{{created_at}}</time>
+    <h1>{{title}}</h1>
+  </div>
+  <div class="post-contents">{{ content }}</div>
+  <footer>
+    <p>
+      このサイトでは Google
+      Analyticsでの計測のため、クッキーを利用しています。
+    </p>
+
+    <p>
+      このサイトのソースコードは<a href="https://github.com/sadnessOjisan/new-blog.ojisan.io">こちら</a>。
+    </p>
+    <p>©︎ <a href="https://twitter.com/sadnessOjisan">sadnessOjisan</a></p>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+  <script>
+    hljs.highlightAll();
+  </script>
+  <script>
+    (function () {
+      var webfont = document.getElementById("webfont");
+      webfont.rel = "stylesheet";
+    })();
+  </script>
+</body>
+
 </html>
