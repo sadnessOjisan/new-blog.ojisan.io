@@ -121,9 +121,10 @@ fn main() {
                 context.insert("path", &front.path);
                 context.insert("created_at", &front.created_at);
                 let dir = fs::read_dir("./public");
-                let target = format!("./public/{}", front.path.as_str());
+                let target = format!("./public{}", front.path.as_str());
                 let target_path = Path::new(target.as_str());
                 file_system::copy(p, target_path);
+                fs::copy("src/assets/me.png", format!("{}/me.png", target));
                 let rendered = tera.render("post.html", &context);
                 let item = IndexItem {
                     title: front.title,
@@ -165,5 +166,4 @@ fn main() {
     fs::copy("src/sw/manifest.json", "public/manifest.json");
     fs::copy("src/sw/sw.js", "public/sw.js");
     fs::copy("src/assets/favicon.ico", "public/favicon.ico");
-    fs::copy("src/assets/me.png", "public/me.png");
 }
