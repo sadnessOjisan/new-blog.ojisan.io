@@ -10,6 +10,12 @@ npm install -g sass
 sass src/style/post.scss:src/style/post.css src/style/top.scss:src/style/top.css
 ```
 
+```
+npm i -g http-server
+
+http-server public
+```
+
 ## deploy
 
 ### html
