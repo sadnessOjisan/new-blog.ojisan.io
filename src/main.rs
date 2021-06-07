@@ -165,4 +165,5 @@ fn main() {
     fs::copy("src/sw/manifest.json", "public/manifest.json");
     fs::copy("src/sw/sw.js", "public/sw.js");
     fs::copy("src/assets/favicon.ico", "public/favicon.ico");
+    fs::copy("src/assets/me.png", "public/me.png");
 }
