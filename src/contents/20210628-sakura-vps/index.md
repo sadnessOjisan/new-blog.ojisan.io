@@ -118,7 +118,7 @@ systemctl start nginx
 
 などといった工夫をしました。
 
-```conf
+```nginx
 server {
     listen 80;
     server_name blog.ojisan.io;
@@ -162,7 +162,7 @@ let parser = Parser::new(&res).map(|event| match event.clone() {
 ```
 
 けど、さきほどの nginx の設定で動いたのでこの案はやめました。
-nginx の設定を教えてくださった [Holly_Nuts\_](https://twitter.com/Holly_Nuts_)さんありがとうございます。
+nginx の設定を教えてくださった [@Holly_Nuts\_](https://twitter.com/Holly_Nuts_)さんありがとうございます。
 
 #### nginx の設定
 
@@ -198,36 +198,24 @@ systemctl status nginx
 
 毎回毎回デプロイするのもめんどくさいので、ローカルでも動くようにしておきましょう。
 
-```
+```sh
 brew install nginx
-```
 
-```
 brew services start nginx
 
 brew services stop nginx
 ```
 
-nginx の port 調べる
-
-```
-lsof -c nginx -P | grep LISTEN
-```
-
-設定ファイルはここ
-
-```
-/usr/local/etc/nginx/nginx.conf
-```
-
-とすれば設定できます。
+設定ファイルは `/usr/local/etc/nginx/nginx.conf` に置くと良いです。
 
 #### Docker で debug するとき
+
+ローカルに nginx をいれると持ち運びや環境の衝突がめんどくさいので、docker を使うのも手です。
 
 このような dockerfile を用意します。
 もちろん COPY 元には該当ファイルは置いておいてください。
 
-```dockerfile
+```sh
 FROM nginx
 COPY ./public /var/www/html
 COPY ./conf /etc/nginx/conf.d
@@ -276,6 +264,8 @@ crontab -u root -e
 00 04 01 * * certbot renew && systemctl restart nginx
 ```
 
+この辺りの設定をまとめて教えてくださった [@inductor](https://twitter.com/_inductor_)さんありがとうございます。
+
 ### rsync
 
 最後にデプロイを考えます。
@@ -299,3 +289,8 @@ rsync -av -e 'ssh -i ~/.ssh/sakura_vps__blog_rsa' server/nginx.conf root@160.16.
 ```
 
 DevOps が叫ばれる時代に手元で rsync とは何かまずいことをしている気もするのですが、rsync は 秘密鍵さえあれば GitHub Actions からのデプロイできるので、Developer Experience 的にも将来なんとかなる予定です。（まだできてない）
+
+## おわりに
+
+OGP 画像はさくら VPS のイメージキャラクターです。
+これは何かのカンファレンスのブースでもらったクリアファイルなのですが、中に入っていたサーバー無料券を無くしてしまっていて少し凹んでいます。
