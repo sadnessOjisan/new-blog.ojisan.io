@@ -9,6 +9,8 @@ isFavorite: false
 isProtect: false
 ---
 
+Firebase を dev/prd の環境を用意した上で、hosting をそれぞれの環境で複数サイト持たせたいときのやり方をよく調べているので、今度こそ忘れないためにメモ。
+
 ## はじめに
 
 そもそも複数環境(prd, dev など)を扱うのであれば project ごと分けます。
