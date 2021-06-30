@@ -1,6 +1,6 @@
 ---
 path: /multi-env-multi-site-fb
-created: "2021-07-0っっk"
+created: "2021-07-01"
 title: 複数環境・複数サイトを対象としたFirebaseデプロイ
 visual: "./visual.png"
 tags: ["Firebase"]
@@ -18,7 +18,7 @@ isProtect: false
 
 Firebase に複数プロジェクトを作ってあれば、 .firebaserc ファイルに宣言することで、切り替えが可能です。
 
-```conf
+```sh
 {
   "projects": {
       "dev":"dev-project-name",
@@ -27,7 +27,7 @@ Firebase に複数プロジェクトを作ってあれば、 .firebaserc ファ�
 }
 ```
 
-```
+```sh
 firebase use dev
 
 firebase use prd
@@ -39,7 +39,7 @@ firebase use prd
 
 手元のコマンドは先ほどのやり方で実現できますが、デプロイの時は project name key をコマンドで指定することでその環境にデプロイが可能となります。
 
-```
+```sh
 firebase deploy --project=dev --force
 ```
 
@@ -89,10 +89,21 @@ Firebase hosting は 1 project に対して複数サイトを作れます。
 ```
 {
   "projects": {
-    "dev": "syntax-highlight-battle-dev"
+    "dev":"dev-project-name",
+    "prd":"prd-project-name"
   },
   "targets": {
-    "syntax-highlight-battle-dev": {
+    "dev-project-name": {
+      "hosting": {
+        "hoge": [
+          "hosting-site-nameA"
+        ],
+        "fuga": [
+          "hosting-site-nameB"
+        ]
+      }
+    },
+    "prd-project-name": {
       "hosting": {
         "hoge": [
           "hosting-site-nameA"
@@ -105,6 +116,8 @@ Firebase hosting は 1 project に対して複数サイトを作れます。
   }
 }
 ```
+
+ここでは hoge, fuga が target 名です。
 
 各 target に対する設定も firebase.json で行えます。
 
