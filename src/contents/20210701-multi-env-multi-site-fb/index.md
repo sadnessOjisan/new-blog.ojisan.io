@@ -66,7 +66,7 @@ firebase deploy は `--only hosting,storage` などの指定を付けないと�
 
 FYI: [https://firebase.google.com/docs/cli#partial_deploys](https://firebase.google.com/docs/cli#partial_deploys)
 
-## 別環境の設定を import する
+### 別環境の設定を import する
 
 複数環境を用意したいということは dev, prd などで分けたいことだと思いますが、そうなるど prd をデプロイするときに dev 環境の firebase.rules などの設定が欲しくなります。
 「最初から source code として管理して、firebase deploy しておけば問題ないのでは」と思われるかもしれませんが、firestore の index はスタックトレースにあるリンクをクリックして編集ができるため、必ずしも手元の rule と同期されているわけではありません。
