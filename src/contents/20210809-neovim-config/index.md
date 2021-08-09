@@ -83,7 +83,7 @@ lspconfig.ocamllsp.setup{on_attach=completion_callback}
 
 ### 補完の設定
 
-neovim の builtin LSP Client で使われることを前提とした補完エンジンに [completion-nvim](https://github.com/nvim-lua/completion-nvim) というのがあるのでこれを使います。正直なところこれを入れなくてもオムニ補完で LSP 経由の補完を呼び出せるのですが、自動で候補が出た方が　 VSCode の体験は出るよなと思って入れました。
+neovim の builtin LSP Client で使われることを前提とした補完エンジンに [completion-nvim](https://github.com/nvim-lua/completion-nvim) というのがあるのでこれを使います。正直なところこれを入れなくてもオムニ補完で LSP 経由の補完を呼び出せるのですが、自動で候補が出た方が VSCode の体験は出るよなと思って入れました。
 
 ```
 Plug 'nvim-lua/completion-nvim'
