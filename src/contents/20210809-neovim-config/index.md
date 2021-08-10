@@ -1,7 +1,7 @@
 ---
 path: /neovim-config
 created: "2021-08-09"
-title: NeoVim の設定を lspconfig + treesitter ベースにした
+title: Neovim の設定を lspconfig + treesitter ベースにした
 visual: "./visual.png"
 tags: ["Vim"]
 userId: sadnessOjisan
@@ -36,7 +36,7 @@ LSP Client は Vim にもたくさんあったのですが、いろいろな人�
 
 ### LSP の設定
 
-どうやら最新の NeoVim(0.5~) には本体に LSP Client が備わったようなので、それを使います。
+どうやら最新の Neovim(0.5~) には本体に LSP Client が備わったようなので、それを使います。
 
 その LSP Client を使うためには、各言語の設定が必要となります。
 その設定を読み込むための Plugin が公式から出ているのでそれを使います。
@@ -47,7 +47,7 @@ LSP Client は Vim にもたくさんあったのですが、いろいろな人�
 Plug 'neovim/nvim-lspconfig'
 ```
 
-ビルトイン LSP Client が使える NeoVim なら Lua が使えるらしいので、Lua で設定を書いていきます。
+ビルトイン LSP Client が使える Neovim なら Lua が使えるらしいので、Lua で設定を書いていきます。
 
 ```
 """""""""""""""""""
@@ -83,7 +83,7 @@ lspconfig.ocamllsp.setup{on_attach=completion_callback}
 
 ### 補完の設定
 
-neovim の builtin LSP Client で使われることを前提とした補完エンジンに [completion-nvim](https://github.com/nvim-lua/completion-nvim) というのがあるのでこれを使います。正直なところこれを入れなくてもオムニ補完で LSP 経由の補完を呼び出せるのですが、自動で候補が出た方が VSCode の体験は出るよなと思って入れました。
+Neovim の builtin LSP Client で使われることを前提とした補完エンジンに [completion-nvim](https://github.com/nvim-lua/completion-nvim) というのがあるのでこれを使います。正直なところこれを入れなくてもオムニ補完で LSP 経由の補完を呼び出せるのですが、自動で候補が出た方が VSCode の体験は出るよなと思って入れました。
 
 ```
 Plug 'nvim-lua/completion-nvim'
