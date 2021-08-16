@@ -16,8 +16,8 @@ isProtect: false
 - <https://www.youtube.com/watch?v=FW2X1CXrU1w>
 - <https://www.youtube.com/watch?v=P9jB7mz2Ax4>
 
-そしてどうもイマドキの設定にはいろいろ新しいものがあると知りました。
-ところで僕は来月に就職するため社用 PC のセットアップを見据えており、Vim の設定をこれを気に新しくしようと思い、ちょっといじってみました。
+これらを見ているとどうもイマドキの設定には新しいプラグインがあると分かりました。
+ところで僕は来月に就職するため社用 PC のセットアップを見据えており、Vim の設定をこれを気に新しくしようと思いちょっといじってみました。
 
 ## 注意
 
@@ -25,8 +25,9 @@ isProtect: false
 
 ## これまでの設定
 
-エディタは VSCode をメインで使っていることもあり、補完 などは LSP に頼っており様々な Language Server をインストールしているため、その Client を Vim にも求めていました。
-LSP Client は Vim にもたくさんあったのですが、いろいろな人から勧められていたこともあって [coc.neovim](https://github.com/neoclide/coc.nvim) を使っていました。
+エディタは VSCode をメインで使っているので補完は LSP に頼っており様々な Language Server をインストールしています。
+なので LSP Client を Vim にも求めていました。
+LSP Client は Vim にもたくさんあったのですが、いろいろな人から勧められていたこともあって [coc.neovim](https://github.com/neoclide/coc.nvim) を使っています。
 設定は <https://github.com/neoclide/coc.nvim#example-vim-configuration> にあるものをそのまま使っていました。
 実際のところは gd と K くらいしか使っていなかった気がしますが。
 
@@ -47,7 +48,7 @@ LSP Client は Vim にもたくさんあったのですが、いろいろな人�
 Plug 'neovim/nvim-lspconfig'
 ```
 
-ビルトイン LSP Client が使える Neovim なら Lua が使えるらしいので、Lua で設定を書いていきます。
+ビルトイン LSP Client が使える Neovim のバージョンなら Lua が使えるらしいので、Lua で設定を書いていきます。
 
 ```
 """""""""""""""""""
