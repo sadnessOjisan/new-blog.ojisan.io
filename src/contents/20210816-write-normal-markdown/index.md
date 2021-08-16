@@ -1,7 +1,7 @@
 ---
 path: /write-normal-markdown
-created: "2021-08-09"
-title:正しく Markdown を書こうと思った
+created: "2021-08-16"
+title: 正しく Markdown を書こうと思った
 visual: "./visual.png"
 tags: ["Markdown"]
 userId: sadnessOjisan
@@ -31,8 +31,8 @@ isProtect: false
 ## 直せない理由・直さない理由
 
 まず、直せると思っていた理由ですが、それは使っている markdown parser [pulldown-cmark](https://github.com/raphlinus/pulldown-cmark) が autolink のサポートを持っていたからです。
-pulldown-cmark には markdown の AST 表現を Node 単位で書き換えられる機能と Rust 自体が持つ制御構文のおかげで該当する https://~ 文字列を autolink 属性 に書き換えられます。
-しかしいざこれをやろうとすると、 https://~ をブログの全文から抜き出して変換できないケースがあったり、そもそもこれは正しい Markdown といえなさそうだったので、それを見つけて直すほうが正しいアプローチな気がしたので見送りました。
+pulldown-cmark には markdown の AST 表現を Node 単位で書き換えられる機能と Pattern Matching で該当する https://~ 文字列を autolink 属性 に書き換えられます。
+しかしいざこれをやろうとすると、 https://~ をブログの全文から抜き出して変換できないケースがあったり、そもそもこれは正しい Markdown といえなさそうでそれを見つけて直すほうが正しいアプローチな気がしたので見送りました。
 
 ## 正しい Markdown ってなんだろう
 
@@ -55,8 +55,8 @@ pulldown-cmark には markdown の AST 表現を Node 単位で書き換えら�
 - PHP Markdown Extra
 
 これら間で持っている機能や文法は多少異なっています。
-そのため、GFM 準拠で書かれた Markdown を CommonMark の parser を通すと期待通りになりません。
-私が出会っていた問題は、GFM で書かれたものを CommonMark の parser で解読したからでした。
+そのため、たとえば GFM 準拠で書かれた Markdown を CommonMark の parser を通すと期待通りになりません。
+ちなみに私が出会っていた問題は、GFM で書かれたものを CommonMark の parser で解読したからでした。
 
 この [CommonMark](https://commonmark.org/) の Why is CommonMark needed? には、
 
