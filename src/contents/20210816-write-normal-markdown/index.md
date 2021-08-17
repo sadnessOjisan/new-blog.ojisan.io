@@ -106,9 +106,7 @@ VFile {
   messages: [],
   history: [],
   cwd: '/Users/ideyuta/Documents/100_projects/toybox/remark-playground',
-  value: '<h1>はじめてのRemark</h1>\n' +
-    '<p><strong>太字</strong>_斜体_テキスト</p>\n' +
-    '<ul>\n' +
+  value:
     '<li>https://flaviocopes.com/how-to-enable-es-modules-nodejs/</li>\n' +
     '<li><a href="https://flaviocopes.com/how-to-enable-es-modules-nodejs/">https://flaviocopes.com/how-to-enable-es-modules-nodejs/</a></li>\n' +
     '</ul>'
