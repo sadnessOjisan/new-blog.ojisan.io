@@ -31,7 +31,7 @@ isProtect: false
 ## 直せない理由・直さない理由
 
 まず、直せると思っていた理由ですが、それは使っている markdown parser [pulldown-cmark](https://github.com/raphlinus/pulldown-cmark) が autolink のサポートを持っていたからです。
-pulldown-cmark には markdown の AST 表現を Node 単位で書き換えられる機能と Pattern Matching で該当する https://~ 文字列を autolink 属性 に書き換えられます。
+pulldown-cmark には markdown の AST 表現を Node 単位で書き換えられる機能があり、 Pattern Matching で該当する https://~ 文字列を autolink 属性 に書き換えられます。
 しかしいざこれをやろうとすると、 https://~ をブログの全文から抜き出して変換できないケースがあったり、そもそもこれは正しい Markdown といえなさそうでそれを見つけて直すほうが正しいアプローチな気がしたので見送りました。
 
 ## 正しい Markdown ってなんだろう
@@ -79,7 +79,7 @@ Gatsby の仕組みとしてプラグイン機構があり、Markdown の 変換
 [gatsby-transformer-remark](https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/) がそのライブラリです。
 お察しの通り、このプラグインは内部で [remark](https://github.com/remarkjs/remark) を使っています。
 
-では、remark が GFM をサポートしているのでしょうか？試し実験しました。
+では、remark が GFM をサポートしているのでしょうか？試しに実験しました。
 
 <https://github.com/ojisan-toybox/remark-playground>
 
@@ -106,9 +106,7 @@ VFile {
   messages: [],
   history: [],
   cwd: '/Users/ideyuta/Documents/100_projects/toybox/remark-playground',
-  value: '<h1>はじめてのRemark</h1>\n' +
-    '<p><strong>太字</strong>_斜体_テキスト</p>\n' +
-    '<ul>\n' +
+  value:
     '<li>https://flaviocopes.com/how-to-enable-es-modules-nodejs/</li>\n' +
     '<li><a href="https://flaviocopes.com/how-to-enable-es-modules-nodejs/">https://flaviocopes.com/how-to-enable-es-modules-nodejs/</a></li>\n' +
     '</ul>'
