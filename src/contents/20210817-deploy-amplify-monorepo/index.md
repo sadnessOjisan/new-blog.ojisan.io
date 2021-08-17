@@ -9,13 +9,12 @@ isFavorite: false
 isProtect: false
 ---
 
-monorepo の扱いでちょっとつまづいたのでメモ
+今思えばすごく簡単な話でしたが、monorepo を実現する最小構成が分からなくてちょっとつまづいたのでメモです。
 
 ## そもそも monorepo 用の設定はいるのか？
 
 [amplify](https://aws.amazon.com/jp/amplify/) は標準で monorepo 用のサポートや機能が存在しています。
-しかしユーザーからしてみれば、root の package.json から 各 workspace への alias を貼っておき、root から見たデプロイフォルダを指定さえできれば困らないはずで特にサポートは不要かに思えます。
-
+ユーザーからしてみれば、root の package.json から 各 workspace への alias を貼っておき、root から見たデプロイフォルダを指定さえできれば困らないはずで特にサポートは不要かにも思えます。
 しかしそうしなくても amplify が提供している monorepo サポートを使えば、その package に定義された npm scripts をそのまま呼び出せたりと何かと便利なので使っていきます。
 
 ## 最小構成
@@ -64,7 +63,6 @@ Amplify は project を作成したときに、
 といった質問がされます。
 
 ここで moorepo のうちデプロイしたいフォルダ名を指定します。
-
 そしてそのフォルダ名は amplify.yaml の中の appRoot に合致させる必要があります。
 
 ## ちゃんと yaml を書こう
