@@ -1,5 +1,5 @@
 ---
-path: /node-bin-order
+path: /webpack-env-var
 created: "2021-08-23"
 title: webpack でビルドするときの環境変数を読み込む方法の整理と、読み込み方法の切り替え
 visual: "./visual.png"
