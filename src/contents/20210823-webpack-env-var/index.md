@@ -1,6 +1,19 @@
-みなさんご存知の通り plugin に書けばおしまいな話ですが、いろいろやり方があってデファクトが決まっているわけでもないので、ローカルでは .env から読み込みたいけどデプロイ環境では CD 環境の環境変数を使いたいなどといった場合は何を使えばいいかなどは即答できないのではないでしょうか。状況や要件によっては一筋縄でいかないこともあると思ったので、関連する技術の整理をしました。
+---
+path: /node-bin-order
+created: "2021-08-23"
+title: webpack でビルドするときの環境変数を読み込む方法の整理と、読み込み方法の切り替え
+visual: "./visual.png"
+tags: ["NodeJS", "webpack"]
+userId: sadnessOjisan
+isFavorite: false
+isProtect: false
+---
+
+みなさんご存知の通り webpack での環境変数の設定は plugin に書けばおしまいな話ですが、いろいろやり方がありそれぞれメリット・デメリットがあります。そのため、「ローカルでは .env から読み込みたいけどデプロイ環境では CD 環境の環境変数を使いたいときはどの方法が良いだろうか」「Git で管理するファイルへのハードコードはしたくない」などとケーススタディをすると即答できませんでした。このように状況や要件によってはその読み込み方法の選定に悩むこともありそうと思ったので、関連する技術の整理をしました。
 
 ## よく見るやり方
+
+「webpack 環境変数」などでググると下記のようなやり方がされるようです。
 
 ### .env に書き出す
 
@@ -16,6 +29,8 @@ webpack のビルドは Node.js の環境で行われるので、設定ファイ
 
 ## 代表的なライブラリや機能
 
+上記のやり方を支えるライブラリや公式の機能があるので、それぞれの使い方を考えてみます。
+
 ### webpack.DefinePlugin
 
 [DefinePlugin](https://webpack.js.org/plugins/define-plugin/) は、
@@ -30,7 +45,7 @@ webpack のビルドは Node.js の環境で行われるので、設定ファイ
 
 [EnvironmentPlugin](https://webpack.js.org/plugins/environment-plugin/) は、
 
-The EnvironmentPlugin is shorthand for using the DefinePlugin on process.env keys.
+> The EnvironmentPlugin is shorthand for using the DefinePlugin on process.env keys.
 
 とある通り、DefinePlugin を環境変数に特化させたようなモノです。
 
@@ -73,7 +88,7 @@ console.log(result.parsed);
 
 このように error と parsed を key に持ったオブジェクトができますが、環境変数は parsed の中にオブジェクトとして格納されます。
 
-webpack で使う場合には、webpack.DefinePlugin と組み合わせる必要があります。
+あくまでも .env から値を取得できるだけなので、webpack で使う場合には、webpack.DefinePlugin と組み合わせる必要があります。
 
 ### dotenv-webpack
 
@@ -103,13 +118,15 @@ FYI: <https://github.com/mrsteele/dotenv-webpack/blob/master/src/index.js#L129>
 
 ## ローカルでは .env から読み込みたいけど、デプロイ環境では .env から読みたくないとき
 
-デプロイ環境では .env から読みたくないとはどういう状況でしょうか。それは .env ファイルを GitHub 上で管理したくない + ハードコーディングしたくない場合です。webpack を使うプロジェクトは多くの場合がフロントエンド開発であり、ソースコードは public になっても問題がない場合がほとんどだとは思いますが、開発環境のエンドポイントは見せたくなかったり、SSR するようにもなって後任者がうっかり.env に見えちゃいけないものを書いてしまったりということはある話だと思います。.env を Git で管理しないようにして、config フォルダに環境変数ファイルを入れて CD 上で cp するといったやり方もみますが、これもハードコーディングしてるので避けるべきことだと思います。とはいえ開発時は .env ファイルで環境変数を管理しておくと簡単に向き先を変えられたり便利なことも多いと思います。そこで、開発時は .env から読み込み、デプロイ時は別の方法で環境変数を読み込むようにしましょう。
+.env は便利なので使いたいです。ただし、.env ファイルを GitHub 上で管理したくない + ハードコーディングしたくない場合があると思います。webpack を使うプロジェクトは多くの場合がフロントエンド開発でありソースコードは public になっても問題がない場合がほとんどだとは思いますが、開発環境のエンドポイントは見せたくなかったり SSR するようにもなって後任者がうっかり.env に見えちゃいけないものを書いてしまったりというケースです。
+
+そのため .env を ignore しているプロジェクトが多いと思います。一方でそうすると CD 環境でのビルドが手間です。そこで、開発時は .env から読み込み、デプロイ時は別の方法で環境変数を読み込むようにしましょう。
 
 ### dotenv-webpack と dotenv のどちらを使うべきか
 
-デプロイ時には .env が存在しません。そのため開発時は .env から読み込み、デプロイ時は別の方法で環境変数を読み込むのであれば、webpack.config.js 上で .env がいま存在しているかによって環境変数を読み込む方法を分ける必要があります。
+開発時は .env から読み込み、デプロイ時は別の方法で環境変数を読み込むのであれば、webpack.config.js 上で .env がいま存在しているかによって環境変数を読み込む方法を分ける必要があります。
 
-dotenv-webpack は .env を読み取った上で webpack への設定をするため、環境変数そのものを扱うのがすこし苦手です。なのでここでは dotenv を使います。webpack での環境変数の展開は手動で行います。
+dotenv-webpack は .env を読み取った上で webpack への設定をするため、環境変数そのものを扱うのがすこし苦手です。なのでここでは dotenv を使います。そして webpack での環境変数の展開は手動で行います。
 
 ### というわけで実装
 
@@ -139,7 +156,7 @@ const config = {
 module.exports = config;
 ```
 
-.env がないと `dotenv.config().parsed` は `undefined` になるのでそれを利用する。
+.env がないと `dotenv.config().parsed` は `undefined` になるのでそれを利用しています。
 
 ### 懸念点
 
