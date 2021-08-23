@@ -183,3 +183,5 @@ export const getFUGA = (): string => {
 ```
 
 sample code: <https://github.com/ojisan-toybox/webpack-dot-env>
+
+もっと良いやり方があれば [@sadnessOjisan](https://twitter.com/sadnessOjisan) まで教えてください。
