@@ -157,6 +157,7 @@ module.exports = config;
 ```
 
 .env がないと `dotenv.config().parsed` は `undefined` になるのでそれを利用しています。
+ない場合は、起動時の変数やパラメータストアから引っ張って来れる値を使って、DefinePlugin で埋め込みます。
 
 ### 懸念点
 
